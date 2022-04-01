@@ -1,7 +1,7 @@
-package clinet;
+package client;
 
-import clinet.Thread.ListeningThread;
-import clinet.Thread.WritingThread;
+import client.Thread.ListeningThread;
+import client.Thread.WritingThread;
 
 import java.io.IOException;
 import java.net.Socket;

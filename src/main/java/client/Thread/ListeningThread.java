@@ -1,4 +1,4 @@
-package clinet.Thread;
+package client.Thread;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

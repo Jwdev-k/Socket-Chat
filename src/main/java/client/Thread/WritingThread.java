@@ -1,4 +1,4 @@
-package clinet.Thread;
+package client.Thread;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
