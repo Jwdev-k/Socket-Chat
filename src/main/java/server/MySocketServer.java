@@ -1,5 +1,6 @@
 package server;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,9 +15,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 // 소켓통신용 서버 코드
+@Slf4j
 public class MySocketServer extends Thread {
-
-    private Logger log = LoggerFactory.getLogger(MySocketServer.class);
 
     static ArrayList<Socket> list = new ArrayList<Socket>(); // 유저 확인용
     static Socket socket = null;
@@ -72,7 +72,6 @@ public class MySocketServer extends Thread {
 
     public static void main(String[] args) {
         try {
-
             int socketPort = 7777; // 소켓 포트 설정용
             ServerSocket serverSocket = new ServerSocket(socketPort); // 서버 소켓 만들기
             // 서버 오픈 확인용
@@ -88,6 +87,7 @@ public class MySocketServer extends Thread {
 
         } catch (IOException e) {
             e.printStackTrace(); // 예외처리
+            System.exit(1);
         }
 
     }

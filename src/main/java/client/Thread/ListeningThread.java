@@ -1,5 +1,7 @@
 package client.Thread;
 
+import client.ClientGUI;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,11 +21,10 @@ public class ListeningThread extends Thread { // 서버에서 보낸 메세지 �
             InputStream input = socket.getInputStream();
             // BufferedReader에 위 InputStream을 담아 사용
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-
-            while (true) { // 무한반복
-                System.out.println(reader.readLine());
+            ClientGUI gui = new ClientGUI();
+            while (true) {
+                System.out.println(reader.readLine() + "\n");
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
