@@ -10,21 +10,21 @@ import java.net.Socket;
 public class MySocketClient {
     public static Socket socket;
 
+
     public static void main(String[] args) {
         try {
-            socket = new Socket("127.0.0.1", 7777);
-            System.out.println("서버에 접속 성공!"); // 접속 확인용
+            ClientGUI gui = new ClientGUI();
+            socket = new Socket("127.0.0.1", 7777); // 소켓 서버에 접속
+            ClientGUI.sendText("서버에 접속 성공!" + "\n"); // 접속 확인용
+            gui.setVisible(true);
+            ListeningThread lt = new ListeningThread(socket); //서버에서 받아오는 쓰레드
+            lt.start();
+            WritingThread wt = new WritingThread(socket);
+            wt.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // 서버에서 보낸 메세지 읽는 clinet.Thread
-        ListeningThread t1 = new ListeningThread(socket); //서버에서 받아오는 쓰레드
-        WritingThread t2 = new WritingThread(socket); // 서버로 메세지 보내는 clinet.Thread
 
-        t1.start(); // clinet.Thread.ListeningThread Start
-        t2.start(); // clinet.Thread.WritingThread Start
-        ClientGUI gui = new ClientGUI();
-        gui.setVisible(true);
-        // 소켓 서버에 접속
+
     }
 }

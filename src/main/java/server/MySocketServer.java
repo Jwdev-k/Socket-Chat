@@ -55,7 +55,6 @@ public class MySocketServer extends Thread {
                     writer.println(name + "님이 접속하셨습니다.");
                     continue;
                 }
-
                 // list 안에 클라이언트 정보가 담겨있음
                 for(int i = 0; i<list.size(); i++) {
                     out = list.get(i).getOutputStream();

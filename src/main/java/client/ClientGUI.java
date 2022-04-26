@@ -8,7 +8,6 @@ import java.awt.*;
 import javax.swing.event.*;
 import client.Thread.WritingThread;
 import java.awt.event.*;
-import java.net.Socket;
 import javax.swing.*;
 import javax.swing.GroupLayout;
 
@@ -18,28 +17,43 @@ import javax.swing.GroupLayout;
  */
 public class ClientGUI extends JFrame {
 
-    private final Socket socket = MySocketClient.socket;
+    public String text;
 
     public ClientGUI() {
         initComponents();
     }
 
+    public static void sendText(String s) {
+        ChatList.append(s + "\n");
+    }
+
     private void Enter(ActionEvent e) {
+        WritingThread.writeText = ChatText.getText();
+        WritingThread wt = new WritingThread(MySocketClient.socket);
+        wt.start();
         ChatText.setText("");
     }
 
     private void ChatTextKeyPressed(KeyEvent e) {
         if (e.getKeyCode() == 10) {
+            WritingThread.writeText = ChatText.getText();
+            WritingThread wt = new WritingThread(MySocketClient.socket);
+            wt.start();
             ChatText.setText("");
         }
     }
 
-    private void thisWindowClosing(WindowEvent e) {
-        System.exit(1);
+    private void thisWindowClosing(WindowEvent e){
+        System.exit(0);
     }
 
-    private void thisWindowActivated(WindowEvent e) {
+    private void ChatListCaretUpdate(CaretEvent e) {
     }
+
+    private void ChatListInputMethodTextChanged(InputMethodEvent e) {
+
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         Enter = new JButton();
@@ -52,10 +66,6 @@ public class ClientGUI extends JFrame {
         setTitle("TestClient");
         setResizable(false);
         addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowActivated(WindowEvent e) {
-                thisWindowActivated(e);
-            }
             @Override
             public void windowClosing(WindowEvent e) {
                 thisWindowClosing(e);
@@ -84,6 +94,15 @@ public class ClientGUI extends JFrame {
 
                 //---- ChatList ----
                 ChatList.setEditable(false);
+                ChatList.addCaretListener(e -> ChatListCaretUpdate(e));
+                ChatList.addInputMethodListener(new InputMethodListener() {
+                    @Override
+                    public void caretPositionChanged(InputMethodEvent e) {}
+                    @Override
+                    public void inputMethodTextChanged(InputMethodEvent e) {
+                        ChatListInputMethodTextChanged(e);
+                    }
+                });
                 panel1.add(ChatList, BorderLayout.CENTER);
             }
             scrollPane1.setViewportView(panel1);
@@ -124,6 +143,6 @@ public class ClientGUI extends JFrame {
     private JFormattedTextField ChatText;
     private JScrollPane scrollPane1;
     private JPanel panel1;
-    private JTextArea ChatList;
+    public static JTextArea ChatList;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
