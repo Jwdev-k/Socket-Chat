@@ -5,6 +5,7 @@
 package client;
 
 import java.awt.*;
+import javax.swing.event.*;
 import client.Thread.WritingThread;
 import java.awt.event.*;
 import java.net.Socket;
@@ -18,29 +19,17 @@ import javax.swing.GroupLayout;
 public class ClientGUI extends JFrame {
 
     private final Socket socket = MySocketClient.socket;
-    
-    private static String str;
 
     public ClientGUI() {
         initComponents();
     }
 
-    public void sendText(String text) {
-        str = text;
-    }
-
     private void Enter(ActionEvent e) {
-        WritingThread.str(ChatText.getText());
-        WritingThread wt = new WritingThread(socket);
-        wt.start();
         ChatText.setText("");
     }
 
     private void ChatTextKeyPressed(KeyEvent e) {
         if (e.getKeyCode() == 10) {
-            WritingThread.str(ChatText.getText());
-            WritingThread wt = new WritingThread(socket);
-            wt.start();
             ChatText.setText("");
         }
     }
@@ -49,6 +38,8 @@ public class ClientGUI extends JFrame {
         System.exit(1);
     }
 
+    private void thisWindowActivated(WindowEvent e) {
+    }
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         Enter = new JButton();
@@ -61,6 +52,10 @@ public class ClientGUI extends JFrame {
         setTitle("TestClient");
         setResizable(false);
         addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowActivated(WindowEvent e) {
+                thisWindowActivated(e);
+            }
             @Override
             public void windowClosing(WindowEvent e) {
                 thisWindowClosing(e);

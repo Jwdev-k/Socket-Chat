@@ -21,9 +21,8 @@ public class ListeningThread extends Thread { // 서버에서 보낸 메세지 �
             InputStream input = socket.getInputStream();
             // BufferedReader에 위 InputStream을 담아 사용
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-            ClientGUI gui = new ClientGUI();
-            while (true) {
-                System.out.println(reader.readLine() + "\n");
+            while (true) { // 무한반복
+                System.out.println(reader.readLine());
             }
         } catch (Exception e) {
             e.printStackTrace();
