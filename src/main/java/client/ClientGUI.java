@@ -25,6 +25,7 @@ public class ClientGUI extends JFrame {
 
     public static void sendText(String s) {
         ChatList.append(s + "\n");
+        ChatList.setCaretPosition(ChatList.getDocument().getLength());
     }
 
     private void Enter(ActionEvent e) {

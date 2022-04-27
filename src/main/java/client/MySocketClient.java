@@ -15,7 +15,7 @@ public class MySocketClient {
         try {
             ClientGUI gui = new ClientGUI();
             socket = new Socket("127.0.0.1", 7777); // 소켓 서버에 접속
-            ClientGUI.sendText("서버에 접속 성공!" + "\n"); // 접속 확인용
+            ClientGUI.sendText(socket.getInetAddress() + ":" + socket.getPort() + "서버에 접속 성공!" + "\n"); // 접속 확인용
             gui.setVisible(true);
             ListeningThread lt = new ListeningThread(socket); //서버에서 받아오는 쓰레드
             lt.start();
@@ -24,7 +24,5 @@ public class MySocketClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 }
